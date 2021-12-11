@@ -16,7 +16,7 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get('/favicon.ico')
 async def favicon():
-    return FileResponse("fastapi.svg")
+    return FileResponse("favicon.ico")
 
 
 @app.get("/index.html")
