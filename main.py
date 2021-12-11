@@ -6,12 +6,17 @@ from fastapi import FastAPI
 from fastapi.requests import Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
-
+from starlette.responses import FileResponse
 from utils import load_static, load_files, search
 
 app = FastAPI()
 bookmarks, comments, data = load_files()
 templates = Jinja2Templates(directory="templates")
+
+
+@app.get('/favicon.ico')
+async def favicon():
+    return FileResponse("fastapi.svg")
 
 
 @app.get("/index.html")
