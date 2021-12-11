@@ -8,7 +8,7 @@ ADD static ./static
 ADD templates ./templates
 ADD main.py ./main.py
 ADD utils.py ./utils.py
-ADD fastapi.svg ./fastapi.svg
+ADD favicon.ico ./favicon.ico
 ENV HOST=0.0.0.0
 ENV PORT=8080
 
