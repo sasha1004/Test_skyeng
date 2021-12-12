@@ -1,18 +1,15 @@
-FROM python:3.9-slim-buster
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.7
 
 ADD requirements.txt ./requirements.txt
 RUN pip install -r ./requirements.txt
 
-ADD data ./data
-ADD static ./static
-ADD templates ./templates
-ADD main.py ./main.py
-ADD utils.py ./utils.py
-ADD favicon.ico ./favicon.ico
+ADD data /app/data
+ADD static /app/static
+ADD templates /app/templates
+ADD main.py /app/main.py
+ADD utils.py /app/utils.py
+ADD favicon.ico /app/favicon.ico
 ENV HOST=0.0.0.0
 ENV PORT=5000
-
-EXPOSE 8080
-ENTRYPOINT python main.py
 
 

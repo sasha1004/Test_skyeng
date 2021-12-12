@@ -87,7 +87,7 @@ async def add_bookmarks(request: Request, postid:int):
 @app.get("/bookmarks/", response_class=HTMLResponse)
 @app.get("/bookmarks/{tagname}", response_class=HTMLResponse)
 async def bookmark(request: Request, tagname: str = '*'):
-    with open("data/bookmarks.json","r",encoding="utf-8") as file:
+    with open("data/bookmarks.json", "r", encoding="utf-8") as file:
         data = json.load(file)
     return templates.TemplateResponse("/bookmarks.html", {"request": request,
                                                           "data": data})
