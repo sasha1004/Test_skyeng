@@ -11,5 +11,6 @@ ADD utils.py /app/utils.py
 ADD favicon.ico /app/favicon.ico
 ENV HOST=0.0.0.0
 ENV PORT=5000
+ENV MAX_WORKERS=1
 
 
