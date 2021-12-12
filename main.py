@@ -80,16 +80,14 @@ async def tag(request: Request, tagname: str = '*'):
 @app.get("/bookmarks/add/{postid}", response_class=HTMLResponse)
 async def add_bookmarks(request: Request, postid: int):
     global bookmarks
-
     for item in bookmarks:
         if item.get("pk") == postid:
             return RedirectResponse("/")
 
-    with open("data/bookmarks.json", "w", encoding="utf-8") as file:
-        item = search(data=data, by='pk', value=postid).pop()
-        item['active'] = True
-        bookmarks.append(item)
-        json.dump(bookmarks, file, indent=4, ensure_ascii=False)
+    item = search(data=data, by='pk', value=postid).pop()
+    item['active'] = True
+    bookmarks.append(item)
+
     return RedirectResponse("/")
 
 
@@ -101,8 +99,6 @@ async def add_bookmarks(request: Request, postid: int):
             bookmarks.pop(index)
             break
 
-    with open("data/bookmarks.json", "w", encoding="utf-8") as file:
-        json.dump(bookmarks, file, indent=4, ensure_ascii=False)
     return templates.TemplateResponse("/bookmarks.html", {"request": request,
                                                           "data": bookmarks})
 
@@ -110,10 +106,14 @@ async def add_bookmarks(request: Request, postid: int):
 @app.get("/bookmarks/", response_class=HTMLResponse)
 async def bookmark(request: Request):
     global bookmarks
-    with open("data/bookmarks.json", "r", encoding="utf-8") as file:
-        data = json.load(file)
     return templates.TemplateResponse("/bookmarks.html", {"request": request,
-                                                          "data": data})
+                                                          "data": bookmarks})
+
+
+@app.on_event("shutdown")
+def shutdown_event():
+    with open("data/bookmarks.json", mode="w", encoding="utf-8") as file:
+        json.dump(bookmarks, file, indent=4, ensure_ascii=False)
 
 
 if __name__ == '__main__':
