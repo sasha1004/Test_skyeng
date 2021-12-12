@@ -10,7 +10,7 @@ ADD main.py ./main.py
 ADD utils.py ./utils.py
 ADD favicon.ico ./favicon.ico
 ENV HOST=0.0.0.0
-ENV PORT=8080
+ENV PORT=5000
 
 EXPOSE 8080
 ENTRYPOINT python main.py
