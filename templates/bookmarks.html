@@ -34,6 +34,7 @@
             </div>
             <span class="item__username">{{user.poster_name}}</span>
           </a>
+          <a href="/bookmarks/delete/{{user.pk}}" class="item__delete">Удалить</a>
         </div>
         <a href="/posts/{{user.pk}}" class="item__post-link">
           <img src="{{user.pic}}" alt="" width="348" class="item__post-img">

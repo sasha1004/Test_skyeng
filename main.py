@@ -29,6 +29,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get('/favicon.ico')
 async def favicon():
     return FileResponse("favicon.ico")
@@ -76,12 +77,30 @@ async def tag(request: Request, tagname: str = '*'):
 
 
 @app.get("/bookmarks/add/{postid}", response_class=HTMLResponse)
-async def add_bookmarks(request: Request, postid:int):
+async def add_bookmarks(request: Request, postid: int):
+    for item in bookmarks:
+        if item.get("pk") == postid:
+            return RedirectResponse("/")
 
     with open("data/bookmarks.json", "w", encoding="utf-8") as file:
-        bookmarks.append(search(data=data, by='pk', value=postid).pop())
+        item = search(data=data, by='pk', value=postid).pop()
+        item['active'] = True
+        bookmarks.append(item)
         json.dump(bookmarks, file, indent=4, ensure_ascii=False)
     return RedirectResponse("/")
+
+
+@app.get("/bookmarks/delete/{postid}", response_class=HTMLResponse)
+async def add_bookmarks(request: Request, postid: int):
+    for index, item in enumerate(bookmarks):
+        if item.get("pk") == postid:
+            bookmarks.pop(index)
+            break
+
+    with open("data/bookmarks.json", "w", encoding="utf-8") as file:
+        json.dump(bookmarks, file, indent=4, ensure_ascii=False)
+    return templates.TemplateResponse("/bookmarks.html", {"request": request,
+                                                          "data": bookmarks})
 
 
 @app.get("/bookmarks/", response_class=HTMLResponse)

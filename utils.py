@@ -19,6 +19,10 @@ def load_static(app):
     app.mount("/tag/css", StaticFiles(directory="static/css"), name="search_css")
     app.mount("/bookmarks/img", StaticFiles(directory="static/img"), name="search_img")
     app.mount("/bookmarks/css", StaticFiles(directory="static/css"), name="search_css")
+    app.mount("/bookmarks/delete/img", StaticFiles(directory="static/img"), name="search_img")
+    app.mount("/bookmarks/delete/css", StaticFiles(directory="static/css"), name="search_css")
+    app.mount("/bookmarks/add/img", StaticFiles(directory="static/img"), name="search_img")
+    app.mount("/bookmarks/add/css", StaticFiles(directory="static/css"), name="search_css")
     return app
 
 
