@@ -78,6 +78,8 @@ async def tag(request: Request, tagname: str = '*'):
 
 @app.get("/bookmarks/add/{postid}", response_class=HTMLResponse)
 async def add_bookmarks(request: Request, postid: int):
+    global bookmarks
+
     for item in bookmarks:
         if item.get("pk") == postid:
             return RedirectResponse("/")
@@ -92,6 +94,7 @@ async def add_bookmarks(request: Request, postid: int):
 
 @app.get("/bookmarks/delete/{postid}", response_class=HTMLResponse)
 async def add_bookmarks(request: Request, postid: int):
+    global bookmarks
     for index, item in enumerate(bookmarks):
         if item.get("pk") == postid:
             bookmarks.pop(index)
@@ -104,8 +107,8 @@ async def add_bookmarks(request: Request, postid: int):
 
 
 @app.get("/bookmarks/", response_class=HTMLResponse)
-@app.get("/bookmarks/{tagname}", response_class=HTMLResponse)
-async def bookmark(request: Request, tagname: str = '*'):
+async def bookmark(request: Request):
+    global bookmarks
     with open("data/bookmarks.json", "r", encoding="utf-8") as file:
         data = json.load(file)
     return templates.TemplateResponse("/bookmarks.html", {"request": request,
