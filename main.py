@@ -4,6 +4,7 @@ import os
 import uvicorn
 from fastapi import FastAPI
 from fastapi.requests import Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from starlette.responses import FileResponse
@@ -14,6 +15,19 @@ app = load_static(app)
 bookmarks, comments, data = load_files()
 templates = Jinja2Templates(directory="templates")
 
+origins = [
+    "http://localhost",
+    "http://localhost:8080",
+    "https://test-skyeng.herokuapp.com/"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get('/favicon.ico')
 async def favicon():
