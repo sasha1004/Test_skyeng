@@ -38,6 +38,7 @@ async def favicon():
 @app.get("/index.html")
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
+    global bookmarks
     return templates.TemplateResponse("/index.html", {"request": request,
                                                       "data": data,
                                                       "bookmarks": bookmarks})
