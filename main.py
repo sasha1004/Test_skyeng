@@ -10,6 +10,7 @@ from starlette.responses import FileResponse
 from utils import load_static, load_files, search
 
 app = FastAPI()
+app = load_static(app)
 bookmarks, comments, data = load_files()
 templates = Jinja2Templates(directory="templates")
 
@@ -79,7 +80,6 @@ async def bookmark(request: Request, tagname: str = '*'):
 
 
 if __name__ == '__main__':
-    app = load_static(app)
     uvicorn.run(app=app,
                 host=os.getenv("HOST", "0.0.0.0"),
                 port=int(os.getenv("PORT", 5000)))
